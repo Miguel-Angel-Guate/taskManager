@@ -9,24 +9,13 @@
 
 
 <div class="list-menu">
-  <a class="list-menu-item is-active">
-    <p>list One</p>
 
-  </a>
-  <a class="list-menu-item">
-    <p>list One</p>
-
-  </a>
-  <a class="list-menu-item">
-    <p>list One</p>
-
-  </a>
-  <a class="list-menu-item">
-    <p>list One</p>
+  <a class="list-menu-item" *ngFor="let list of lists" [routerLink]="['/lists', list._id]" routerLinkActive="is-active" >
+    <p>{{ list.title }}</p>
 
   </a>
 </div>
-<button class="buton has-background-primary" routerLink="/new-list">+ new list</button>
+<button class="buton has-background-primary" routerLink="/new-list" >+ new list</button>
 
     </div>
 
@@ -36,19 +25,12 @@
     Tasks
   </h1>
   <!-- Task elements here -->
-  <div class="task">
-    <p>here i have some thing to do</p>
+  <div class="task" *ngFor="let task of tasks">
+    <p>{{ task.title }}/p>
   </div>
 
-  <div class="task complete">
-    <p>here i have some thing to do</p>
-  </div>
-  <div class="task">
-    <p>here i have some thing to do</p>
-  </div>
-  <div class="task">
-    <p>here i have some thing to do</p>
-  </div>
+  <button class="button is-success">+ task</button>
+
 </div>
 </div>
 
