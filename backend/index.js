@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const mongoose = require('./db/mongoose');
+const PORT = process.env.PORT || 3000;
+
+
 
 
 //load in the mongoose models
@@ -8,18 +11,11 @@ const mongoose = require('./db/mongoose');
 // const { Task } = require('./db/models/task.model')
 const { List, Task } = require('./db/models');
 
-app.use((req, res, next) => {
-      res.header('Access-Control-Allow-Origin', '*');
-      res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-      res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-      res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-      next();
-});
-
-const PORT = process.env.PORT || 3000;
 
 
-app.use(express.json());
+
+
+
 
 
 
@@ -32,10 +28,10 @@ app.use(express.json());
 +get/lists
 *purpose: Get all lists
 */
-
+app.use(express.json());
 app.get('/lists', (req, res) => {
       // we want to return an array of all lthe lists of dataase
-      List.find().then((lists) => {
+      List.find({}).then((lists) => {
             res.send(lists);
       }).catch((e) => {
             res.send(e)
@@ -110,6 +106,35 @@ app.post('/lists/:listId/tasks', (req, res) => {
             res.send(newTaskDoc);
       })
 
+})
+
+/**
+ * update of the task
+ *  patch
+*/
+app.patch('/lists/:listId/tasks/:taskId', (req, res) => {
+    Task.findOneAndUpdate({
+          _id: req.params.taskId,
+          _listId: req.params.listId
+    }, {
+          $set: req.body
+    }).then(()=>{
+          res.sendStatus(200);
+    })  
+})
+
+/**
+ * Delete the task
+ *  
+*/
+
+app.delete('/lists/:listId/tasks/:taskId',(req, res) => {
+      Task.findOneAndRemove({
+            _id: req.params.taskId,
+            _listId: req.params.listId
+      }).then((removedTaskDoc) => {
+            res.send(removedTaskDoc);
+      })
 })
 
 

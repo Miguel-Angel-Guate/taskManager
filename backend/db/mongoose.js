@@ -8,8 +8,8 @@ mongoose.connect('mongodb://localhost:27017/TaskManager', {
        useUnifiedTopology:true,   
        useFindAndModify:false
 })
-.then(()=> console.log('welcome mongoose to my oficce, remembeme alway i need never give up'))
+.then(()=> console.log('welcome mongoose to my oficce'))
 .catch((erro) => console.log(error))
 
 
-module.exports = (mongoose)
+module.exports = {mongoose}
